@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+{% block title %} Home{% endblock title %} 
+{% block body %}
+
+    <div class="container my-3">
+        <!-- <h2>Play with Stocks</h2> -->
+    </div>
+
+    <div class="container">
+        <div class="row">
+
+          <div class="col-5">
+            <h2>Play With Stocks</h2>
+            <form class="form-inline" action="/api/stock/search" method="post">
+              <div class="container search">
+                <div class="row">
+                  <div class="col-9">
+                    <div class="mb-2">
+                      <!-- <label for="inputPassword2" class="sr-only">Password</label> -->
+                      <input type="text" class="form-control" id="search" name="search" placeholder="Search Stock">
+                    </div>
+                  </div>
+                  <div class="col-3">
+                    <button type="submit" class="btn btn-primary">Search</button>
+                  </div>
+                </div>
+              </div>
+            </form>
+
+            <form action="/api/stock/add_stocks" method="post">
+              <ul>
+                  {% for stock in filtered_stocks %}
+                      <li>
+                          <input type="checkbox" name="selected_stocks" value="{{ stock }}">
+                          {{ stock }}
+                      </li>
+                  {% endfor %}
+              </ul>
+              <button type="submit">Add Stocks</button>
+            </form>
+
+          <h2>Selected Stocks</h2>
+          <ul>
+              {% for stock in selected_stocks %}
+                  <li>{{ stock }}</li>
+              {% endfor %}
+          </ul>
+
+            <h2>All stocks</h2>
+            <ul>
+                {% for stock in all_stocks %}
+                    <li>{{ stock }}</li>
+                {% endfor %}
+            </ul>
+            <!-- {% if query %}
+                <p>Search results for '{{ query }}':</p>
+                <ul>
+                    {% for result in search_results %}
+                        <li>{{ result }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %} -->
+          </div>
+
+
+
+          <div class="col-7">
+            <h2>Analyze Stocks</h2>
+            <form class="form-inline" action="/api/stock/update_graph" method="post">
+              <button type="submit">Update Graph</button>
+            </form>
+            {% if graph_stocks %}
+                <p>Graph Stocks:</p>
+                <ul>
+                    {% for stock in graph_stocks %}
+                        <li>{{ stock }}</li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+              <p>No stocks Selected for graph!</p>
+            {% endif %}
+          </div>
+        </div>
+    </div>
+
+
+
+
+
+    <!-- Optional JavaScript; choose one of the two! -->
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
+        crossorigin="anonymous"></script>
+
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <!--
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js" integrity="sha384-KsvD1yqQ1/1+IA7gi3P0tyJcT3vR+NdBTt13hSJ2lnve8agRGXTTyNaBYmCR/Nwi" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.min.js" integrity="sha384-nsg8ua9HAw1y0W1btsyWgBklPnCUAFLuTMS2G72MMONqmOymq585AcH49TLBQObG" crossorigin="anonymous"></script>
+    -->
+
+{% endblock body %}

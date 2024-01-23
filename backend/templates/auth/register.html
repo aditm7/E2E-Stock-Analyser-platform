@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Register</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="auth">
+    <div class="form-container">
+        <h2>Register</h2>
+        <form action="/api/auth/register" method="post">
+            <div class="form-group">
+                <input type="text" name="username" placeholder="Username" required>
+            </div>
+            <div class="form-group">
+                <input type="password" name="password" placeholder="Password" required>
+            </div>
+            <div class="form-group">
+                <button class="button-auth" type="submit">Register</button>
+            </div>
+        </form>
+        <p>Already have an account? <a href="/api/auth/">Login here</a></p>
+    </div>
+</body>
+</html>
