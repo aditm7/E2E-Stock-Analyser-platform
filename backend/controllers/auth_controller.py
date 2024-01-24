@@ -9,7 +9,7 @@ auth = Blueprint("auth", __name__)
 
 @auth.route('/')
 def index():
-    return render_template("auth/login.html")
+    return render_template("login.html")
 
 @auth.route('/register', methods=['GET', 'POST'])
 def register():
@@ -25,7 +25,7 @@ def register():
         flash('Registration successful! Please login.')
         return redirect(url_for('/api.auth.login'))
 
-    return render_template('auth/register.html')
+    return render_template('register.html')
 
 @auth.route('/login', methods=['POST'])
 def login():

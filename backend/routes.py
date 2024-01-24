@@ -5,8 +5,5 @@ from backend.controllers.stock_controller import stock
 # main blueprint to be registered with application
 api = Blueprint('/api', __name__)
 
-# register auth with api blueprint
 api.register_blueprint(auth, url_prefix="/auth")
-
-# register stock with api blueprint
 api.register_blueprint(stock, url_prefix="/stock")
