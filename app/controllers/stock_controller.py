@@ -1,8 +1,8 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, session, Blueprint
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
-from backend.models.user_model import User
-from backend import db
+from database.models.user_model import User
+from app import db
 
 # stock controller blueprint to be registered with api blueprint
 stock = Blueprint("stock", __name__)
@@ -16,7 +16,7 @@ def dashboard():
     if 'user_id' in session:
         return render_template('home.html', username=session['username'], all_stocks=stocks, filtered_stocks=stocks, selected_stocks=selected_stocks)
     else:
-        return redirect(url_for('/api.auth.index'))
+        return redirect(url_for('/.auth.index'))
 
 @stock.route('/search', methods=['POST'])
 def search():

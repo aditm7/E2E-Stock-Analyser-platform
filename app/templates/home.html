@@ -11,7 +11,7 @@
 
           <div class="col-5">
             <h2>Play With Stocks</h2>
-            <form class="form-inline" action="/api/stock/search" method="post">
+            <form class="form-inline" action="/stock/search" method="post">
               <div class="container search">
                 <div class="row">
                   <div class="col-9">
@@ -27,7 +27,7 @@
               </div>
             </form>
 
-            <form action="/api/stock/add_stocks" method="post">
+            <form action="/stock/add_stocks" method="post">
               <ul>
                   {% for stock in filtered_stocks %}
                       <li>
@@ -66,7 +66,7 @@
 
           <div class="col-7">
             <h2>Analyze Stocks</h2>
-            <form class="form-inline" action="/api/stock/update_graph" method="post">
+            <form class="form-inline" action="/stock/update_graph" method="post">
               <button type="submit">Update Graph</button>
             </form>
             {% if graph_stocks %}
