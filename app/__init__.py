@@ -21,6 +21,8 @@ db = SQLAlchemy(app)
 migrate = Migrate(app, db,directory=os.environ.get("MIGRATION_DIR"))
 
 from app.routes import app_blueprint
+from api.routes import api_blueprint
 app.register_blueprint(app_blueprint, url_prefix="/")
+app.register_blueprint(api_blueprint, url_prefix="/api")
 
 from database.models.user_model import User
