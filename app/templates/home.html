@@ -8,47 +8,67 @@
           <div class="col-5">
 
             <h2>Play With Stocks</h2>
-              <div class="container search">
-                <div class="row">
-                  <div class="col-9">
-                    <div class="mb-2">
-                      <input type="text" class="form-control live-search-box" id="searchInput" name="search" placeholder="Search Stock">
-                    </div>
-                  </div>
-                </div>
-              </div>
+
+            <button type="button" onclick="reset()">Reset</button>
+            <button type="button" onclick="showall()">Show All</button>
+
+
+            <div class="container search" id="searchContainer">
+            <br/>
+            <input type="text" class="form-control live-search-box" id="searchInput" name="search" placeholder="Search Stock">
+            </div>
+
+
+            <div id="itemsContainer">
+            <ul class="selected-stock-list" type="None"> 
+              {% for stock in selected_stocks %}
+                  <li class="item">
+                      <label class="selected-list">
+                          {{ stock }} 
+                          <button type="button" name="removed_stock" onclick="removeStock('{{ stock }}')">x</button>
+                      </label>
+                  </li>
+              {% endfor %}
+            </ul>
+            </div>
+
+            <h5>Filter Stocks by Average Price</h5>
+            <form id="filterStocksForm" action="/stock/filter_stocks" method="get">
+                <label for="from_price">From: </label>
+                <input type="number" name="from_price" id="from_price" step="0.01" required>
+                <label for="to_price">To: </label>
+                <input type="number" name="to_price" id="to_price" step="0.01" required>
+                <button type="button" onclick="filterStocks()">Apply Filter</button>
+            </form><br/>
               
-              <button type="button" onclick="reset()">Reset</button>
-              <button type="button" onclick="showall()">Show All</button>
 
             <form id="selectStockForm">
-              <ul class="live-search-list"> 
+              <table>
+              <thead>
+                <tr>
+                    <th>Stock</th>
+                    <th>Avg Price</th>
+                    <th>CAGR(%)</th>
+                    <th>Add</th>
+                </tr>
+              </thead>
+              <tbody class="live-search-list"> 
                   {% for stock in showing_stocks %}
-                      <li>
+                      <tr>
+                          <td class="code">{{stocks_map[stock]['code']}}</td>
+                          <td>{{stocks_map[stock]['avg_price']}}</td>
+                          <td>{{stocks_map[stock]['cagr']}}</td>
+                          <td>
                           <label class="search-list">
-                              {{ stock }} 
+                              <!-- {{ stock }}  -->
                               <button type="button" name="selected_stock" onclick="selectStock('{{ stock }}')">✓</button>
                           </label>
-                      </li>
+                          </td>
+                      </tr>
                   {% endfor %}
-              </ul>
+              </tbody>
+            </table>
             </form>
-          
-
-
-          <h2>Selected Stocks</h2>
-          <form id="removeStockForm">
-            <ul class="selected-stock-list"> 
-                {% for stock in selected_stocks %}
-                    <li>
-                        <label class="selected-list">
-                            {{ stock }} 
-                            <button type="button" name="removed_stock" onclick="removeStock('{{ stock }}')">X</button>
-                        </label>
-                    </li>
-                {% endfor %}
-            </ul>
-          </form>
 
           </div>
 

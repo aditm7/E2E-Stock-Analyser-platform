@@ -1,7 +1,7 @@
 jQuery(document).ready(function($){ 
     alert("reloaded")
                 
-    $('.live-search-list li').each(function(){ 
+    $('.live-search-list tr').each(function(){ 
     $(this).attr('data-search-term', $(this).text().toLowerCase()); 
     }); 
       
@@ -9,7 +9,7 @@ jQuery(document).ready(function($){
       
     var searchTerm = $(this).val().toLowerCase(); 
       
-        $('.live-search-list li').each(function(){ 
+        $('.live-search-list tr').each(function(){ 
       
             if ($(this).filter('[data-search-term *= ' + searchTerm + ']').length > 0 || searchTerm.length < 1) { 
                 $(this).show(); 
@@ -24,7 +24,7 @@ jQuery(document).ready(function($){
 }); 
 
 function updateSearch(){
-    $('.live-search-list li').each(function(){ 
+    $('.live-search-list tr').each(function(){ 
         $(this).attr('data-search-term', $(this).text().toLowerCase()); 
         }); 
           
@@ -32,7 +32,7 @@ function updateSearch(){
           
         var searchTerm = $(this).val().toLowerCase(); 
           
-            $('.live-search-list li').each(function(){ 
+            $('.live-search-list tr').each(function(){ 
           
                 if ($(this).filter('[data-search-term *= ' + searchTerm + ']').length > 0 || searchTerm.length < 1) { 
                     $(this).show(); 
@@ -45,6 +45,46 @@ function updateSearch(){
         }); 
 }
 
+function updateShowingList(newShowingStocks, stocks_map){
+    // Update the showing stock list
+    const tdbody = document.querySelector('.live-search-list');
+    tdbody.innerHTML = '';
+
+    newShowingStocks.forEach(stock => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td class="code">${stocks_map[stock]['code']}</td>
+            <td>${stocks_map[stock]['avg_price']}</td>
+            <td>${stocks_map[stock]['cagr']}</td>
+            <td>
+            <label class="search-list">
+                <!-- {{ stock }}  -->
+                <button type="button" name="selected_stock" onclick="selectStock('${ stock }')">✓</button>
+            </label>
+            </td>
+        `;
+        tdbody.appendChild(tr);
+    });
+    updateSearch()
+}
+
+function updateSelectedList(newSelectedStocks){
+    // Update the selected stock list
+    const ul2 = document.querySelector('.selected-stock-list');
+    ul2.innerHTML = '';
+
+    newSelectedStocks.forEach(stock => {
+        const li = document.createElement('li');
+        li.classList.add('item');
+        li.innerHTML = `
+            <label class="selected-list">
+                ${stock} 
+                <button type="button" onclick="removeStock('${stock}')">x</button>
+            </label>`;
+        ul2.appendChild(li);
+    });
+}
+
 function selectStock(selectedStock) {
     // Make an asynchronous GET request to the server
     fetch(`/stock/select_stock?selected_stock=${selectedStock}`)
@@ -53,35 +93,13 @@ function selectStock(selectedStock) {
             // Update the content dynamically based on the response
             const newShowingStocks = data.new_showing_stocks;
             const newSelectedStocks = data.new_selected_stocks;
+            const stocks_map = data.stocks_map;
 
             // Update the showing stock list
-            const ul1 = document.querySelector('.live-search-list');
-            ul1.innerHTML = '';
-
-            newShowingStocks.forEach(stock => {
-                const li = document.createElement('li');
-                li.innerHTML = `
-                    <label class="search-list">
-                        ${stock} 
-                        <button type="button" onclick="selectStock('${stock}')">✓</button>
-                    </label>`;
-                ul1.appendChild(li);
-            });
-            updateSearch()
+            updateShowingList(newShowingStocks, stocks_map)
 
             // Update the selected stock list
-            const ul2 = document.querySelector('.selected-stock-list');
-            ul2.innerHTML = '';
-
-            newSelectedStocks.forEach(stock => {
-                const li = document.createElement('li');
-                li.innerHTML = `
-                    <label class="selected-list">
-                        ${stock} 
-                        <button type="button" onclick="removeStock('${stock}')">X</button>
-                    </label>`;
-                ul2.appendChild(li);
-            });
+            updateSelectedList(newSelectedStocks)
         })
         .catch(error => {
             console.error('Error:', error);
@@ -97,35 +115,13 @@ function removeStock(selectedStock) {
             // Update the content dynamically based on the response
             const newShowingStocks = data.new_showing_stocks;
             const newSelectedStocks = data.new_selected_stocks;
+            const stocks_map = data.stocks_map;
 
             // Update the showing stock list
-            const ul1 = document.querySelector('.live-search-list');
-            ul1.innerHTML = '';
-
-            newShowingStocks.forEach(stock => {
-                const li = document.createElement('li');
-                li.innerHTML = `
-                    <label class="search-list">
-                        ${stock} 
-                        <button type="button" onclick="selectStock('${stock}')">✓</button>
-                    </label>`;
-                ul1.appendChild(li);
-            });
-            updateSearch()
+            updateShowingList(newShowingStocks, stocks_map)
 
             // Update the selected stock list
-            const ul2 = document.querySelector('.selected-stock-list');
-            ul2.innerHTML = '';
-
-            newSelectedStocks.forEach(stock => {
-                const li = document.createElement('li');
-                li.innerHTML = `
-                    <label class="selected-list">
-                        ${stock} 
-                        <button type="button" onclick="removeStock('${stock}')">X</button>
-                    </label>`;
-                ul2.appendChild(li);
-            });
+            updateSelectedList(newSelectedStocks)
         })
         .catch(error => {
             console.error('Error:', error);
@@ -141,35 +137,13 @@ function reset() {
             // Update the content dynamically based on the response
             const newShowingStocks = data.new_showing_stocks;
             const newSelectedStocks = data.new_selected_stocks;
+            const stocks_map = data.stocks_map;
 
             // Update the showing stock list
-            const ul1 = document.querySelector('.live-search-list');
-            ul1.innerHTML = '';
-
-            newShowingStocks.forEach(stock => {
-                const li = document.createElement('li');
-                li.innerHTML = `
-                    <label class="search-list">
-                        ${stock} 
-                        <button type="button" onclick="selectStock('${stock}')">✓</button>
-                    </label>`;
-                ul1.appendChild(li);
-            });
-            updateSearch()
+            updateShowingList(newShowingStocks, stocks_map)
 
             // Update the selected stock list
-            const ul2 = document.querySelector('.selected-stock-list');
-            ul2.innerHTML = '';
-
-            newSelectedStocks.forEach(stock => {
-                const li = document.createElement('li');
-                li.innerHTML = `
-                    <label class="selected-list">
-                        ${stock} 
-                        <button type="button" onclick="removeStock('${stock}')">X</button>
-                    </label>`;
-                ul2.appendChild(li);
-            });
+            updateSelectedList(newSelectedStocks)
         })
         .catch(error => {
             console.error('Error:', error);
@@ -184,21 +158,33 @@ function showall() {
         .then(data => {
             // Update the content dynamically based on the response
             const newShowingStocks = data.new_showing_stocks;
+            const stocks_map = data.stocks_map;
 
             // Update the showing stock list
-            const ul1 = document.querySelector('.live-search-list');
-            ul1.innerHTML = '';
+            updateShowingList(newShowingStocks,stocks_map)
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+}
 
-            newShowingStocks.forEach(stock => {
-                const li = document.createElement('li');
-                li.innerHTML = `
-                    <label class="search-list">
-                        ${stock} 
-                        <button type="button" onclick="selectStock('${stock}')">✓</button>
-                    </label>`;
-                ul1.appendChild(li);
-            });
-            updateSearch()
+
+function filterStocks() {
+    var from_price = document.getElementById('from_price').value;
+    var to_price = document.getElementById('to_price').value;
+    // Make an asynchronous GET request to the server
+    fetch(`/stock/filter_stocks?from_price=${from_price}&to_price=${to_price}`)
+        .then(response => response.json())
+        .then(data => {
+            // Update the content dynamically based on the response
+            const newShowingStocks = data.new_showing_stocks;
+            const stocks_map = data.stocks_map;
+
+            // Update the showing stock list
+            updateShowingList(newShowingStocks,stocks_map)
+
+            document.getElementById('from_price').value = '';
+            document.getElementById('to_price').value = '';
         })
         .catch(error => {
             console.error('Error:', error);
