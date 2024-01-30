@@ -43,9 +43,6 @@ input[type="text"], input[type="password"] {
 }
     /* Add this to your existing style.css */
 
-.search{
-    padding:0px;
-}
 
 .welcome-container {
     text-align: center;
@@ -72,6 +69,18 @@ input[type="text"], input[type="password"] {
 
 .logout-button:hover {
     background-color: #c82333;
+}
+
+
+
+
+
+.search{
+    padding:0px;
+}
+
+.cross-button {
+    cursor: pointer;
 }
 
 
