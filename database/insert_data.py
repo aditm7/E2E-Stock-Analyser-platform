@@ -3,20 +3,23 @@ import pandas as pd
 from sqlalchemy import create_engine, text
 from sqlalchemy.orm import sessionmaker
 
-engine = create_engine('sqlite:///database/database.db')
+market_table_name="market_data"
+company_table_name="company_data"
 
+engine = create_engine('sqlite:///database/database.db')
 Session = sessionmaker(bind=engine)
 session = Session()
 
-# Delete existing data if any
-session.execute(text("DELETE FROM stock_data"))
+session.execute(text(f"DELETE FROM {market_table_name}"))
+session.execute(text(f"DELETE FROM {company_table_name}"))
 session.commit()
 
-#Insert the new stocks data
-csv_files = [f for f in os.listdir('database/data') if f.endswith('.csv')]
+csv_files = [f for f in os.listdir('database/market_data') if f.endswith('.csv')]
 for csv_file in csv_files:
-  df = pd.read_csv(f'database/data/{csv_file}')
-  df.to_sql('stock_data', con=engine, if_exists='append', index=False)
+  df = pd.read_csv(f'database/market_data/{csv_file}')
+  df.to_sql(f'{market_table_name}', con=engine, if_exists='append', index=False)
 
-# commit the session
+df = pd.read_csv(f'database/company_data/ind_nifty50list.csv',usecols=['company','industry','symbol','isin_code'])
+df.to_sql(f'{company_table_name}', con=engine, if_exists='append', index=False)
+
 session.commit()

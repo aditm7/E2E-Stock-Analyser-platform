@@ -26,3 +26,5 @@ app.register_blueprint(app_blueprint, url_prefix="/")
 app.register_blueprint(api_blueprint, url_prefix="/api")
 
 from database.models.user_model import User
+from database.models.company_model import CompanyData
+from database.models.stock_model import StockData

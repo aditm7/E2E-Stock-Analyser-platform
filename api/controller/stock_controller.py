@@ -11,8 +11,8 @@ _payload = StocksDto.payload
 
 @api.route('/<stock_id>')
 @api.param('stock_id', 'The Stock Unique Code')
-class StocksList(Resource):
-  @api.doc('All data of the Stock stored in the DB')
+class StocksMarketData(Resource):
+  @api.doc('The Stock\'s market data stored in the DB')
   @api.marshal_list_with(_stock)
   @api.expect(_payload)
   def get(self,stock_id):

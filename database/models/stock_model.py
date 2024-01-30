@@ -1,7 +1,7 @@
 from app import db,bcrypt
 
 class StockData(db.Model):
-    __tablename__ = 'stock_data'
+    __tablename__ = 'market_data'
 
     id = db.Column(db.Integer, primary_key=True)
     date = db.Column(db.Date)
