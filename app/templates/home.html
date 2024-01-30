@@ -76,10 +76,10 @@
 
           <div class="col-7">
             <h2>Analyze Stocks</h2>
-            <form class="form-inline" action="/stock/update_graph" method="post">
-              <button type="submit">Update Graph</button>
+            <form class="form-inline">
+              <button type="button" onclick="updateGraph()">Update Graph</button>
             </form>
-            {% if graph_stocks %}
+            <!-- {% if graph_stocks %}
                 <p>Graph Stocks:</p>
                 <ul>
                     {% for stock in graph_stocks %}
@@ -88,7 +88,10 @@
                 </ul>
             {% else %}
               <p>No stocks Selected for graph!</p>
-            {% endif %}
+            {% endif %} -->
+            <div class="graph">
+              <p>Please select stocks and update graphs</p>
+            </div>
           </div>
         </div>
     </div>

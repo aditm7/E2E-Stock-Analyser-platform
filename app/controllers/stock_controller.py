@@ -8,39 +8,41 @@ from app import db
 # stock controller blueprint to be registered with api blueprint
 stock = Blueprint("stock", __name__)
 
+start_date="2023-01-01"
+end_date="2024-01-01"
 stocks_map = {
-    "AAPL": {
-        "code": "AAPL",
+    "SBIN": {
+        "code": "SBIN",
         "avg_price": 150.0,
         "cagr": 0.5
         },
-    "GOOGL": {
-        "code": "GOOGL",
+    "ADANIENT": {
+        "code": "ADANIENT",
         "avg_price": 2800.0,
         "cagr": 0.5
         },
-    "AMZN": {
-        "code": "AMZN",
+    "BPCL": {
+        "code": "BPCL",
         "avg_price": 3400.0,
         "cagr": 0.5
         },
-    "MSFT": {
-        "code": "MSFT",
+    "ADANIPORTS": {
+        "code": "ADANIPORTS",
         "avg_price": 300.0,
         "cagr": 0.5
         },
-    "TSLA": {
-        "code": "TSLA",
+    "AXISBANK": {
+        "code": "AXISBANK",
         "avg_price": 700.0,
         "cagr": 0.5
         },
-    "FB": {
-        "code": "FB",
+    "BRITANNIA": {
+        "code": "BRITANNIA",
         "avg_price": 350.0,
         "cagr": 0.5
         }
 }
-stocks = ["AAPL", "GOOGL", "AMZN", "MSFT", "TSLA", "FB"]
+stocks = ["SBIN", "ADANIENT", "BPCL", "ADANIPORTS", "AXISBANK", "BRITANNIA"]
 showing_stocks = []
 selected_stocks = []
 graph_stocks = []
@@ -49,6 +51,15 @@ graph_stocks = []
 def dashboard():
     global showing_stocks, selected_stocks, graph_stocks
     showing_stocks = [stock for stock in stocks if stock not in selected_stocks]
+    return render_template('home.html', all_stocks=stocks, showing_stocks=showing_stocks, selected_stocks=selected_stocks, graph_stocks=graph_stocks, stocks_map=stocks_map)
+
+@stock.route('/setDate' , methods=['POST', 'GET'])
+def set_date():
+    global stocks, showing_stocks, selected_stocks, graph_stocks, stocks_map
+    # make api call to to update stocks_map
+    showing_stocks = stocks.copy()
+    selected_stocks = []
+    graph_stocks = []
     return render_template('home.html', all_stocks=stocks, showing_stocks=showing_stocks, selected_stocks=selected_stocks, graph_stocks=graph_stocks, stocks_map=stocks_map)
 
 
@@ -99,10 +110,9 @@ def show_all_stocks():
     showing_stocks = [stock for stock in stocks if stock not in selected_stocks]
     return {'new_showing_stocks': showing_stocks, 'stocks_map': stocks_map}
 
-@stock.route('/update_graph', methods=['POST'])
+@stock.route('/update_graph', methods=['GET'])
 def update_graph():
     global graph_stocks, selected_stocks, showing_stocks
-    print(selected_stocks)
     graph_stocks = selected_stocks.copy()
-    # selected_stocks = []
-    return redirect(url_for('/.stock.dashboard'))
+    # return redirect(url_for('/.stock.dashboard'))
+    return {'graph_stocks': graph_stocks, 'start_date':start_date, 'end_date':end_date}

@@ -190,3 +190,60 @@ function filterStocks() {
             console.error('Error:', error);
         });
 }
+
+async function updateGraph() {
+    try {
+        const response = await fetch(`/stock/update_graph`);
+        const data = await response.json();
+
+        // Update the content dynamically based on the response
+        const graphStocks = data.graph_stocks;
+        const startDate = data.start_date;
+        const endDate = data.end_date;
+
+        console.log(graphStocks)
+        console.log(startDate)
+        console.log(endDate)
+
+        // Array to store stock data
+        const stockDataArray = [];
+
+        // Define an async function to fetch data for each stock
+        const fetchDataForStock = async (stock) => {
+            const stockResponse = await fetch(`http://localhost:5000/api/stocks/${stock}`, {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    from_date: startDate,
+                    to_date: endDate,
+                }),
+            });
+
+            const stockData = await stockResponse.json();
+            stockDataArray.push({ stock: stock, data: stockData });
+            console.log(`Data for ${stock}:`, stockData);
+        };
+
+        // Use Promise.all to await all fetch operations
+        await Promise.all(graphStocks.map(fetchDataForStock));
+
+        // Now stockDataArray contains the data for each stock
+        console.log('All stock data:', stockDataArray);
+        addGraphImg(stockDataArray)
+    } catch (error) {
+        console.error('Error:', error);
+    }
+}
+
+function addGraphImg(stockDataArray){
+    const div = document.querySelector('.graph');
+    div.innerHTML = '';
+
+    const div2 =  document.createElement('div');
+    div2.innerHTML=`<img src="" alt="no-img" />`
+    // div2.innerHTML=`<p>${stockDataArray[0][0]["open"]}</p>`
+    div.appendChild(div2)
+}
