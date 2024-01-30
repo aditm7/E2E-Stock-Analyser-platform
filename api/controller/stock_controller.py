@@ -15,7 +15,7 @@ class StocksMarketData(Resource):
   @api.doc('The Stock\'s market data stored in the DB')
   @api.marshal_list_with(_stock)
   @api.expect(_payload)
-  def get(self,stock_id):
+  def post(self,stock_id):
     try:
       if request.data:
         from_date = request.json.get('from_date')
