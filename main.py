@@ -1,7 +1,8 @@
 from app import app
-from config import config
+from app import Config
 
 if __name__ == "__main__":
-    app.run(host= config.HOST,
-            port= config.PORT,
-            debug= config.DEBUG)
+    app.run(host= Config.HOST,
+            port= Config.PORT,
+            debug= Config.DEBUG
+            )

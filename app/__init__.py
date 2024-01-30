@@ -4,12 +4,14 @@ from dotenv import load_dotenv
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_bcrypt import Bcrypt
-from config import config,SECRET_KEY
+from config.config import Config
+from config import SECRET_KEY
 
 load_dotenv()
+Config = Config()
 
 app = Flask(__name__,instance_path=os.path.join(os.path.dirname(os.path.abspath(__file__)),'../database'))
-app.env = config.ENV
+app.env = Config.ENV
 
 app.secret_key = SECRET_KEY
 bcrypt = Bcrypt(app)
