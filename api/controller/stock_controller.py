@@ -17,17 +17,15 @@ class StocksList(Resource):
   @api.expect(_payload)
   def get(self,stock_id):
     try:
-      try:
+      if request.data:
         from_date = request.json.get('from_date')
         to_date = request.json.get('to_date')
         if from_date and to_date: # Check if the payload is empty or not
-          try:
-            from_date = datetime.strptime(from_date, '%Y-%m-%d').date()
-            to_date = datetime.strptime(to_date, '%Y-%m-%d').date()
-            return get_stock_data_range(stock_id,from_date,to_date)
-          except ValueError:
-            abort(400, f"Date must be in the following format: YYYY-MM-DD")
-      except:
-        return get_all_stock_data(stock_id)
+          from_date = datetime.strptime(from_date, '%Y-%m-%d').date()
+          to_date = datetime.strptime(to_date, '%Y-%m-%d').date()
+          return get_stock_data_range(stock_id,from_date,to_date)
+      return get_all_stock_data(stock_id)
+    except ValueError:
+      abort(400, f"Date must be in the following format: YYYY-MM-DD")
     except Exception as e:
       abort(400, f"Server error: {str(e)}")
