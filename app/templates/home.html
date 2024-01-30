@@ -6,6 +6,7 @@
         <div class="row">
 
           <div class="col-5">
+
             <h2>Play With Stocks</h2>
               <div class="container search">
                 <div class="row">
@@ -17,36 +18,36 @@
                 </div>
               </div>
               
-              
-              <form class="form-inline" action="/stock/reset_filter" method="post">
-                <button type="submit">Reset</button>
-              </form>
-              <form class="form-inline" action="/stock/show_all_stocks" method="post">
-                <button type="submit">Show All</button>
-              </form>
+              <button type="button" onclick="reset()">Reset</button>
+              <button type="button" onclick="showall()">Show All</button>
 
-
-            <form action="/stock/select_stock" method="post">
+            <form id="selectStockForm">
               <ul class="live-search-list"> 
-              {% for stock in filtered_stocks %}
-                <li>
-                  <label class="search-list">
-                      {{ stock }} <button type="submit" name="selected_stock" value="{{ stock }}">✓</button>
-                  </label>
-                </li>
-              {% endfor %}
-            </ul>
+                  {% for stock in showing_stocks %}
+                      <li>
+                          <label class="search-list">
+                              {{ stock }} 
+                              <button type="button" name="selected_stock" onclick="selectStock('{{ stock }}')">✓</button>
+                          </label>
+                      </li>
+                  {% endfor %}
+              </ul>
             </form>
+          
 
 
           <h2>Selected Stocks</h2>
-          <form action="/stock/remove_stock" method="post">
-            {% for stock in selected_stocks %}
-                <label class="selected">
-                    {{ stock }} <button type="submit" name="removed_stock" value="{{ stock }}">X</button>
-                </label>
-                <br>
-            {% endfor %}
+          <form id="removeStockForm">
+            <ul class="selected-stock-list"> 
+                {% for stock in selected_stocks %}
+                    <li>
+                        <label class="selected-list">
+                            {{ stock }} 
+                            <button type="button" name="removed_stock" onclick="removeStock('{{ stock }}')">X</button>
+                        </label>
+                    </li>
+                {% endfor %}
+            </ul>
           </form>
 
           </div>
