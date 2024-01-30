@@ -3,7 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 from database.models.user_model import User
 from app import db
-import jsonify
+# import jsonify
 
 # stock controller blueprint to be registered with api blueprint
 stock = Blueprint("stock", __name__)
