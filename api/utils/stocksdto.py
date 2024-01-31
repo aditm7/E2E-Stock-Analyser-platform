@@ -4,7 +4,7 @@ class StocksDto:
   """ Data transfer object for Stocks. """
   api = Namespace('stocks', description='Stocks related operations')
 
-  stock = api.model('stocks', {
+  stock = api.model('stocks_market_data', {
     'date':fields.Date(description="Date in YYYY-MM-DD String format"),
     'open': fields.Float(description='opening price of the stock on the day'),
     'close': fields.Float(description='closing price of the stock on the day'),
@@ -15,4 +15,9 @@ class StocksDto:
   payload = api.model('Payload', {
     'from_date': fields.String(description='Start date of the range'),
     'to_date': fields.String(description='End date of the range')
+  })
+
+  stats_parameters = api.model('statistical_parameters',{
+    'symbol':fields.String(description='Stock symbol code'),
+    'cagr':fields.Float(description='Cumulative annual growth rate of the stock in the period'),
   })

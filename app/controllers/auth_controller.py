@@ -8,6 +8,11 @@ auth = Blueprint("auth", __name__)
 
 @auth.route('/')
 def index():
+    from config.api_client import ApiClient
+    client = ApiClient()
+    load = {"from_date":"2024-01-25","to_date":"2024-01-25"}
+    
+    print(client.get("market_data",load,"SBIN"))
     return render_template("login.html")
 
 @auth.route('/register', methods=['GET', 'POST'])
