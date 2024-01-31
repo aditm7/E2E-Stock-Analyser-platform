@@ -33,9 +33,7 @@ def dashboard():
             "cagr":float(0.0)
         }
     for stock in stocks:
-        print(stock)
         stock_obj = api_client.get("statistical_data", {"to_date":end_date,"from_date":start_date}, stock)
-        print(stock_obj)
         stocks_map[stock]["cagr"] = stock_obj["cagr"]
     showing_stocks = [stock for stock in stocks if stock not in selected_stocks]
     return render_template('home.html', all_stocks=stocks, showing_stocks=showing_stocks, selected_stocks=selected_stocks, graph_stocks=graph_stocks, stocks_map=stocks_map, from_date=start_date, to_date=end_date)

@@ -194,9 +194,7 @@ async function updateGraph() {
     try {
         const response = await fetch(`/stock/update_graph`);
         const stockDataArray = await response.json();
-
-        // Now stockDataArray contains the data for each stock
-        console.log('All stock data:', stockDataArray.stockDataArray);
+        
         addGraphImg(stockDataArray);
     } catch (error) {
         console.error('Error:', error);
