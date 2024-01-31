@@ -30,20 +30,21 @@ def dashboard():
         stocks.append(symbol)
         stocks_map[symbol] = {
             "code":symbol,
-            "avg_price":200.4,
-            "cagr":0.5
+            "avg_price":float(200.4),
+            "cagr":float(0.5)
         }
     showing_stocks = [stock for stock in stocks if stock not in selected_stocks]
-    return render_template('home.html', all_stocks=stocks, showing_stocks=showing_stocks, selected_stocks=selected_stocks, graph_stocks=graph_stocks, stocks_map=stocks_map)
+    return render_template('home.html', all_stocks=stocks, showing_stocks=showing_stocks, selected_stocks=selected_stocks, graph_stocks=graph_stocks, stocks_map=stocks_map, from_date=start_date, to_date=end_date)
 
-@stock.route('/setDate' , methods=['POST', 'GET'])
-def set_date():
-    global stocks, showing_stocks, selected_stocks, graph_stocks, stocks_map
-    # make api call to to update stocks_map
+@stock.route('/process_date' , methods=['POST', 'GET'])
+def process_date():
+    global stocks, showing_stocks, selected_stocks, graph_stocks, stocks_map, start_date, end_date
+    start_date = request.form.get('from_date')
+    end_date = request.form.get('to_date')
     showing_stocks = stocks.copy()
     selected_stocks = []
     graph_stocks = []
-    return render_template('home.html', all_stocks=stocks, showing_stocks=showing_stocks, selected_stocks=selected_stocks, graph_stocks=graph_stocks, stocks_map=stocks_map)
+    return redirect(url_for('/.stock.dashboard'))
 
 
 @stock.route('/filter_stocks', methods=['GET'])
