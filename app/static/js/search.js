@@ -198,17 +198,22 @@ async function updateGraph() {
 
         // Now stockDataArray contains the data for each stock
         console.log('All stock data:', stockDataArray.stockDataArray);
-        addGraphImg(stockDataArray.stockDataArray)
+        addGraphImg(stockDataArray);
     } catch (error) {
         console.error('Error:', error);
     }
 }
 
-function addGraphImg(stockDataArray){
+function addGraphImg(stockDataArrayObject){
     const div = document.querySelector('#graph_ohlc');
     div.innerHTML = '';
     const div2 = document.querySelector('#graph_line');
     div2.innerHTML = '';
+    if(stockDataArrayObject.stockDataArray.length==0){
+        div.innerHTML = `<p>Please select stocks and update graphs</p>`;
+        return;
+    }
+    stockDataArray = stockDataArrayObject.stockDataArray;
     anychart.onDocumentReady(function () {
 
         const chart_ohlc = anychart.stock();

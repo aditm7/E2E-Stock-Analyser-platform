@@ -1,5 +1,4 @@
-/* style.css */
-.auth {
+/* .auth {
     font-family: 'Arial', sans-serif;
     background-color: #f2f2f2;
     display: flex;
@@ -28,7 +27,6 @@
 
 input[type="text"], input[type="password"] {
     width: 100%;
-    /* padding: 10px; */
     border: 1px solid #ddd;
     border-radius: 5px;
     box-sizing: border-box;
@@ -41,7 +39,6 @@ input[type="text"], input[type="password"] {
     background-color: #007bff;
 
 }
-    /* Add this to your existing style.css */
 
 
 .welcome-container {
@@ -90,15 +87,9 @@ input[type="text"], input[type="password"] {
 
 #itemsContainer {
     display: inline;
-    /* justify-content: center; 
-    align-items: center; */
     flex-wrap: wrap;
 }
 .item {
-    /* background-color: #e0e0e0;
-    padding: 10px;
-    margin: 5px;
-    border-radius: 5px; */
     display: inline-block;
     border-style: solid;
     border-width: 1px;
@@ -111,18 +102,73 @@ input[type="text"], input[type="password"] {
     padding: 0;
 }
 
-/* #searchContainer {
+
+
+ */
+
+
+ body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+  }
+  
+  .container {
+    max-width: 1200px;
+    margin: 20px auto;
+  }
+  
+  .row {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 20px;
-}
-
-#searchInput {
-    width: 200px;
+    justify-content: space-between;
+  }
+  
+  .col-left,
+  .col-right {
+    flex: 1;
+  }
+  
+  /* Add your specific styling for search, form, and graph containers */
+  .search-section {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .live-search-box {
+    width: 100%;
     padding: 8px;
-    margin-right: 10px;
-}*/
-
-
-
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .selected-stock-list {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .selected-stock-list li {
+    margin-bottom: 5px;
+  }
+  
+  .form-control {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .graph-container {
+    background-color: #fff;
+    padding: 20px;
+    margin-top: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Add more specific styling based on your design preferences */
+  
