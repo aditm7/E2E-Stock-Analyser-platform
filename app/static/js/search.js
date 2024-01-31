@@ -194,56 +194,45 @@ function filterStocks() {
 async function updateGraph() {
     try {
         const response = await fetch(`/stock/update_graph`);
-        const data = await response.json();
-
-        // Update the content dynamically based on the response
-        const graphStocks = data.graph_stocks;
-        const startDate = data.start_date;
-        const endDate = data.end_date;
-
-        console.log(graphStocks)
-        console.log(startDate)
-        console.log(endDate)
-
-        // Array to store stock data
-        const stockDataArray = [];
-
-        // Define an async function to fetch data for each stock
-        const fetchDataForStock = async (stock) => {
-            const stockResponse = await fetch(`http://localhost:5000/api/stocks/${stock}`, {
-                method: 'POST',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    from_date: startDate,
-                    to_date: endDate,
-                }),
-            });
-
-            const stockData = await stockResponse.json();
-            stockDataArray.push({ stock: stock, data: stockData });
-            console.log(`Data for ${stock}:`, stockData);
-        };
-
-        // Use Promise.all to await all fetch operations
-        await Promise.all(graphStocks.map(fetchDataForStock));
+        const stockDataArray = await response.json();
 
         // Now stockDataArray contains the data for each stock
-        console.log('All stock data:', stockDataArray);
-        addGraphImg(stockDataArray)
+        console.log('All stock data:', stockDataArray.stockDataArray);
+        addGraphImg(stockDataArray.stockDataArray)
     } catch (error) {
         console.error('Error:', error);
     }
 }
 
 function addGraphImg(stockDataArray){
-    const div = document.querySelector('.graph');
+    const div = document.querySelector('#graph_ohlc');
     div.innerHTML = '';
+    const div2 = document.querySelector('#graph_line');
+    div2.innerHTML = '';
+    anychart.onDocumentReady(function () {
 
-    const div2 =  document.createElement('div');
-    div2.innerHTML=`<img src="" alt="no-img" />`
-    // div2.innerHTML=`<p>${stockDataArray[0][0]["open"]}</p>`
-    div.appendChild(div2)
+        const chart_ohlc = anychart.stock();
+        const chart_line = anychart.stock();
+        // chart_line.plot(0).yAxis().labels().format('{%Value}');
+
+        for (let i = 0; i < stockDataArray.length; i++) {
+            const stock = stockDataArray[i];
+            var table = anychart.data.table('date');
+            table.addData(stock.data);
+
+            mapping_ohlc = table.mapAs({'open':"open",'high': "high", 'low':"low", 'close':"close"});
+            const series_ohlc = chart_ohlc.plot(0).ohlc(mapping_ohlc);
+
+            mapping_line = table.mapAs({'value':"open"});
+            const series_line = chart_line.plot(0).line(mapping_line);
+            
+            series_ohlc.name(stock.stock);
+            series_line.name(stock.stock);
+        }
+
+        chart_ohlc.container('graph_ohlc');
+        chart_ohlc.draw();
+        chart_line.container('graph_line');
+        chart_line.draw();
+      });
 }

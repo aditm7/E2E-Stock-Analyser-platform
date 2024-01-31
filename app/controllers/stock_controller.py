@@ -3,6 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 from database.models.user_model import User
 from app import db
+from config.api_client import ApiClient
 # import jsonify
 
 # stock controller blueprint to be registered with api blueprint
@@ -10,46 +11,28 @@ stock = Blueprint("stock", __name__)
 
 start_date="2023-01-01"
 end_date="2024-01-01"
-stocks_map = {
-    "SBIN": {
-        "code": "SBIN",
-        "avg_price": 150.0,
-        "cagr": 0.5
-        },
-    "ADANIENT": {
-        "code": "ADANIENT",
-        "avg_price": 2800.0,
-        "cagr": 0.5
-        },
-    "BPCL": {
-        "code": "BPCL",
-        "avg_price": 3400.0,
-        "cagr": 0.5
-        },
-    "ADANIPORTS": {
-        "code": "ADANIPORTS",
-        "avg_price": 300.0,
-        "cagr": 0.5
-        },
-    "AXISBANK": {
-        "code": "AXISBANK",
-        "avg_price": 700.0,
-        "cagr": 0.5
-        },
-    "BRITANNIA": {
-        "code": "BRITANNIA",
-        "avg_price": 350.0,
-        "cagr": 0.5
-        }
-}
-stocks = ["SBIN", "ADANIENT", "BPCL", "ADANIPORTS", "AXISBANK", "BRITANNIA"]
+stocks_map={}
+stocks=[]
 showing_stocks = []
 selected_stocks = []
 graph_stocks = []
 
+api_client = ApiClient()
+
 @stock.route('/dashboard' , methods=['POST', 'GET'])
 def dashboard():
-    global showing_stocks, selected_stocks, graph_stocks
+    global stocks, showing_stocks, selected_stocks, graph_stocks, stocks_map
+    companies_list = api_client.get('all_companies')
+    stocks = []
+    stocks_map = {}
+    for company in companies_list:
+        symbol=company['symbol']
+        stocks.append(symbol)
+        stocks_map[symbol] = {
+            "code":symbol,
+            "avg_price":200.4,
+            "cagr":0.5
+        }
     showing_stocks = [stock for stock in stocks if stock not in selected_stocks]
     return render_template('home.html', all_stocks=stocks, showing_stocks=showing_stocks, selected_stocks=selected_stocks, graph_stocks=graph_stocks, stocks_map=stocks_map)
 
@@ -112,7 +95,10 @@ def show_all_stocks():
 
 @stock.route('/update_graph', methods=['GET'])
 def update_graph():
-    global graph_stocks, selected_stocks, showing_stocks
+    global graph_stocks, selected_stocks, showing_stocks, start_date, end_date
     graph_stocks = selected_stocks.copy()
-    # return redirect(url_for('/.stock.dashboard'))
-    return {'graph_stocks': graph_stocks, 'start_date':start_date, 'end_date':end_date}
+    stockDataArray = []
+    for stock in graph_stocks:
+        stockData = api_client.get('market_data',{"to_date":end_date,"from_date":start_date}, stock)
+        stockDataArray.append({'stock':stock, 'data':stockData})
+    return {'stockDataArray': stockDataArray}

@@ -9,6 +9,12 @@
 
             <h2>Play With Stocks</h2>
 
+            <form action="/stock/process_date" method="post">
+              <label for="input_date">Start Date:</label>
+              <input type="date" id="input_date" name="input_date" required>
+              <button type="submit">Submit</button>
+            </form>
+
             <button type="button" onclick="reset()">Reset</button>
             <button type="button" onclick="showall()">Show All</button>
 
@@ -79,18 +85,11 @@
             <form class="form-inline">
               <button type="button" onclick="updateGraph()">Update Graph</button>
             </form>
-            <!-- {% if graph_stocks %}
-                <p>Graph Stocks:</p>
-                <ul>
-                    {% for stock in graph_stocks %}
-                        <li>{{ stock }}</li>
-                    {% endfor %}
-                </ul>
-            {% else %}
-              <p>No stocks Selected for graph!</p>
-            {% endif %} -->
-            <div class="graph">
+            <div id="graph_ohlc" style="width: 100%; height: 300px;">
               <p>Please select stocks and update graphs</p>
+            </div>
+            <div id="graph_line" style="width: 100%; height: 300px;">
+              <!-- <p>Please elect stocks and update graphs</p> -->
             </div>
           </div>
         </div>

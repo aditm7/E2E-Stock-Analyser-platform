@@ -3,7 +3,7 @@ import os
 import json
 
 class ApiClient:
-  base_url = f"http://127.0.0.1:{os.environ.get("PORT")}/api"
+  base_url = "http://127.0.0.1:8080/api"
   _routes = {
     "market_data": "/stocks/{}",
     "all_companies":"/company/all",
