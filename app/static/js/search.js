@@ -1,5 +1,4 @@
 jQuery(document).ready(function($){ 
-    alert("reloaded")
                 
     $('.live-search-list tr').each(function(){ 
     $(this).attr('data-search-term', $(this).text().toLowerCase()); 
@@ -53,7 +52,7 @@ function updateShowingList(newShowingStocks, stocks_map){
     newShowingStocks.forEach(stock => {
         const tr = document.createElement('tr');
         tr.innerHTML = `
-            <td class="code">${stocks_map[stock]['code']}</td>
+            <td style="text-align: left;">${stocks_map[stock]['code']}</td>
             <td>${stocks_map[stock]['cagr']}</td>
             <td>
             <label class="search-list">
@@ -143,6 +142,9 @@ function reset() {
 
             // Update the selected stock list
             updateSelectedList(newSelectedStocks)
+
+            document.getElementById('from_cagr').value = '';
+            document.getElementById('to_cagr').value = '';
         })
         .catch(error => {
             console.error('Error:', error);
@@ -161,6 +163,9 @@ function showall() {
 
             // Update the showing stock list
             updateShowingList(newShowingStocks,stocks_map)
+
+            document.getElementById('from_cagr').value = '';
+            document.getElementById('to_cagr').value = '';
         })
         .catch(error => {
             console.error('Error:', error);
@@ -182,8 +187,8 @@ function filterStocks() {
             // Update the showing stock list
             updateShowingList(newShowingStocks,stocks_map)
 
-            document.getElementById('from_cagr').value = '';
-            document.getElementById('to_cagr').value = '';
+            // document.getElementById('from_cagr').value = '';
+            // document.getElementById('to_cagr').value = '';
         })
         .catch(error => {
             console.error('Error:', error);
@@ -194,7 +199,7 @@ async function updateGraph() {
     try {
         const response = await fetch(`/stock/update_graph`);
         const stockDataArray = await response.json();
-        
+
         addGraphImg(stockDataArray);
     } catch (error) {
         console.error('Error:', error);
@@ -223,7 +228,7 @@ function addGraphImg(stockDataArrayObject){
             table.addData(stock.data);
 
             mapping_ohlc = table.mapAs({'open':"open",'high': "high", 'low':"low", 'close':"close"});
-            const series_ohlc = chart_ohlc.plot(0).ohlc(mapping_ohlc);
+            const series_ohlc = chart_ohlc.plot(0).candlestick(mapping_ohlc);
 
             mapping_line = table.mapAs({'value':"open"});
             const series_line = chart_line.plot(0).line(mapping_line);

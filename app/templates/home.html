@@ -6,31 +6,65 @@
         <div class="row">
 
           <div class="col-left">
-
             <h2>Play With Stocks</h2>
 
-            <h4>Input Dates</h1>
-            <form action="/stock/process_date" method="post">
-                <label for="from_date">From Date:</label>
-                <input type="date" id="from_date" name="from_date" value="{{ from_date }}" required>
-                <br>
-                <label for="to_date">To Date:</label>
-                <input type="date" id="to_date" name="to_date" value="{{ to_date }}" required>
-                <br>
-                <button type="submit">Submit</button>
-            </form>
+            <!-- Input date and CAGR filters -->
+            <div class="filter-container">
+              <div class="date-filter-container">
+                <form action="/stock/process_date" method="post">
+                  <label for="from_date">From Date:</label>
+                  <input type="date" id="from_date" name="from_date" value="{{ from_date }}" required>
+            
+                  <label for="to_date">To Date:</label>
+                  <input type="date" id="to_date" name="to_date" value="{{ to_date }}" required>
+            
+                  <button type="submit">Update Stocks</button>
+                </form>
+              </div>
+            
+              <div class="filter-section">
+                <form id="filterStocksForm" action="/stock/filter_stocks" method="get">
+                  <label for="from_cagr">From CAGR: </label>
+                  <input type="number" name="from_cagr" id="from_cagr" step="0.01" required>
+            
+                  <label for="to_cagr">To CAGR: </label>
+                  <input type="number" name="to_cagr" id="to_cagr" step="0.01" required>
+            
+                  <button type="button" onclick="filterStocks()">Apply Filter</button>
+                </form>
+              </div>
+            </div>
 
-            <button type="button" onclick="reset()" class="reset">Reset</button>
-            <button type="button" onclick="showall()" class="showall">Show All</button>
-
-
-            <div class="container-search" id="searchContainer">
-            <br/>
-            <input type="text" class="form-control live-search-box" id="searchInput" name="search" placeholder="Search Stock">
+            <!-- Search bar and Reset buttons -->
+            <div class="search-section">
+              <div class="search-bar-container">
+                <div class="container-search" id="searchContainer">
+                  <br/>
+                  <input type="text" class="live-search-box" id="searchInput" name="search" placeholder="Search Stock">
+                </div>
+                <div class="buttons-container">
+                  <button type="button" onclick="reset()" class="reset">Reset</button>
+                  <button type="button" onclick="showall()" class="showall">Show All</button>
+                </div>
+              </div>
+              <!-- List of selected Stocks -->
+              <div id="itemsContainer">
+              <ul class="selected-stock-list" type="None"> 
+                {% for stock in selected_stocks %}
+                    <li class="item">
+                        <label class="selected-list">
+                            {{ stock }} 
+                            <button type="button" name="removed_stock" onclick="removeStock('{{ stock }}')">x</button>
+                        </label>
+                    </li>
+                {% endfor %}
+              </ul>
+              </div>
             </div>
 
 
-            <div id="itemsContainer">
+            <!-- List of selected Stocks -->
+            <!-- <div id="itemsContainer">
             <ul class="selected-stock-list" type="None"> 
               {% for stock in selected_stocks %}
                   <li class="item">
@@ -41,23 +75,15 @@
                   </li>
               {% endfor %}
             </ul>
-            </div>
-
-            <h5>Filter Stocks by CAGR</h5>
-            <form id="filterStocksForm" action="/stock/filter_stocks" method="get">
-                <label for="from_cagr">From: </label>
-                <input type="number" name="from_cagr" id="from_cagr" step="0.01" required>
-                <label for="to_cagr">To: </label>
-                <input type="number" name="to_cagr" id="to_cagr" step="0.01" required>
-                <button type="button" onclick="filterStocks()">Apply Filter</button>
-            </form><br/>
+            </div> -->
               
 
-            <form id="selectStockForm">
+            <!-- List of eligible stocks -->
+            <div id="selectStockForm">
               <table>
               <thead>
                 <tr>
-                    <th>Stock</th>
+                    <th style="text-align: left;">Stock</th>
                     <th>CAGR(%)</th>
                     <th>Add</th>
                 </tr>
@@ -65,7 +91,7 @@
               <tbody class="live-search-list"> 
                   {% for stock in showing_stocks %}
                       <tr>
-                          <td class="code">{{stocks_map[stock]['code']}}</td>
+                          <td style="text-align: left;">{{stocks_map[stock]['code']}}</td>
                           <td>{{stocks_map[stock]['cagr']}}</td>
                           <td>
                           <label class="search-list">
@@ -77,31 +103,26 @@
                   {% endfor %}
               </tbody>
             </table>
-            </form>
+            <div class="scroll-message">Scroll down for more stocks</div>
+          </div>
 
           </div>
 
-
-
+          <!-- Right column- graph display -->
           <div class="col-right">
             <h2>Analyze Stocks</h2>
             <form class="form-inline">
               <button type="button" onclick="updateGraph()">Update Graph</button>
             </form>
-            <div id="graph_ohlc" style="width: 100%; height: 300px;" class="graph-container">
+            <div id="graph_ohlc" class="graph-container">
               <p>Please select stocks and update graphs</p>
             </div>
-            <div id="graph_line" style="width: 100%; height: 300px;" class="graph-container">
-              <!-- <p>Please elect stocks and update graphs</p> -->
+            <div id="graph_line" class="graph-container">
             </div>
           </div>
+
         </div>
     </div>
 
-
-    <!-- Option 1: Bootstrap Bundle with Popper -->
-    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
-        crossorigin="anonymous"></script> -->
 
 {% endblock body %}
