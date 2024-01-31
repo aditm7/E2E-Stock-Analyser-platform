@@ -54,7 +54,6 @@ function updateShowingList(newShowingStocks, stocks_map){
         const tr = document.createElement('tr');
         tr.innerHTML = `
             <td class="code">${stocks_map[stock]['code']}</td>
-            <td>${stocks_map[stock]['avg_price']}</td>
             <td>${stocks_map[stock]['cagr']}</td>
             <td>
             <label class="search-list">
@@ -170,10 +169,10 @@ function showall() {
 
 
 function filterStocks() {
-    var from_price = document.getElementById('from_price').value;
-    var to_price = document.getElementById('to_price').value;
+    var from_cagr = document.getElementById('from_cagr').value;
+    var to_cagr = document.getElementById('to_cagr').value;
     // Make an asynchronous GET request to the server
-    fetch(`/stock/filter_stocks?from_price=${from_price}&to_price=${to_price}`)
+    fetch(`/stock/filter_stocks?from_cagr=${from_cagr}&to_cagr=${to_cagr}`)
         .then(response => response.json())
         .then(data => {
             // Update the content dynamically based on the response
@@ -183,8 +182,8 @@ function filterStocks() {
             // Update the showing stock list
             updateShowingList(newShowingStocks,stocks_map)
 
-            document.getElementById('from_price').value = '';
-            document.getElementById('to_price').value = '';
+            document.getElementById('from_cagr').value = '';
+            document.getElementById('to_cagr').value = '';
         })
         .catch(error => {
             console.error('Error:', error);

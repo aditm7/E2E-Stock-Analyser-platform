@@ -30,9 +30,13 @@ def dashboard():
         stocks.append(symbol)
         stocks_map[symbol] = {
             "code":symbol,
-            "avg_price":float(200.4),
-            "cagr":float(0.5)
+            "cagr":float(0.0)
         }
+    for stock in stocks:
+        print(stock)
+        stock_obj = api_client.get("statistical_data", {"to_date":end_date,"from_date":start_date}, stock)
+        print(stock_obj)
+        stocks_map[stock]["cagr"] = stock_obj["cagr"]
     showing_stocks = [stock for stock in stocks if stock not in selected_stocks]
     return render_template('home.html', all_stocks=stocks, showing_stocks=showing_stocks, selected_stocks=selected_stocks, graph_stocks=graph_stocks, stocks_map=stocks_map, from_date=start_date, to_date=end_date)
 
@@ -51,11 +55,11 @@ def process_date():
 def filter_stocks():
     global showing_stocks, selected_stocks, graph_stocks
 
-    from_price = float(request.args.get('from_price'))
-    to_price = float(request.args.get('to_price'))
+    from_cagr = float(request.args.get('from_cagr'))
+    to_cagr = float(request.args.get('to_cagr'))
 
     showing_stocks = [stock for stock, data in stocks_map.items() if
-                       data['avg_price'] >= from_price and data['avg_price'] <= to_price and stock not in selected_stocks]
+                       data['cagr'] >= from_cagr and data['cagr'] <= to_cagr and stock not in selected_stocks]
 
     return {'new_showing_stocks': showing_stocks, 'stocks_map': stocks_map}
 
@@ -83,7 +87,6 @@ def remove_stock():
 @stock.route('/reset_filter', methods=['GET'])
 def clear():
     global graph_stocks, selected_stocks, showing_stocks
-    # graph_stocks = []
     selected_stocks = []
     showing_stocks = stocks.copy()
     return {'new_showing_stocks': showing_stocks, 'new_selected_stocks': selected_stocks, 'stocks_map': stocks_map}

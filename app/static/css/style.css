@@ -113,6 +113,14 @@ input[type="text"], input[type="password"] {
     padding: 0;
     background-color: #f4f4f4;
   }
+
+  .positive {
+    color: green;
+  }
+  
+  .negative {
+    color: red;
+  }
   
   .container {
     max-width: 1200px;

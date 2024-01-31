@@ -43,12 +43,12 @@
             </ul>
             </div>
 
-            <h5>Filter Stocks by Average Price</h5>
+            <h5>Filter Stocks by CAGR</h5>
             <form id="filterStocksForm" action="/stock/filter_stocks" method="get">
-                <label for="from_price">From: </label>
-                <input type="number" name="from_price" id="from_price" step="0.01" required>
-                <label for="to_price">To: </label>
-                <input type="number" name="to_price" id="to_price" step="0.01" required>
+                <label for="from_cagr">From: </label>
+                <input type="number" name="from_cagr" id="from_cagr" step="0.01" required>
+                <label for="to_cagr">To: </label>
+                <input type="number" name="to_cagr" id="to_cagr" step="0.01" required>
                 <button type="button" onclick="filterStocks()">Apply Filter</button>
             </form><br/>
               
@@ -58,7 +58,6 @@
               <thead>
                 <tr>
                     <th>Stock</th>
-                    <th>Avg Price</th>
                     <th>CAGR(%)</th>
                     <th>Add</th>
                 </tr>
@@ -67,7 +66,6 @@
                   {% for stock in showing_stocks %}
                       <tr>
                           <td class="code">{{stocks_map[stock]['code']}}</td>
-                          <td>{{stocks_map[stock]['avg_price']}}</td>
                           <td>{{stocks_map[stock]['cagr']}}</td>
                           <td>
                           <label class="search-list">
