@@ -220,7 +220,6 @@ function addGraphImg(stockDataArrayObject){
 
         const chart_ohlc = anychart.stock();
         const chart_line = anychart.stock();
-        // chart_line.plot(0).yAxis().labels().format('{%Value}');
 
         for (let i = 0; i < stockDataArray.length; i++) {
             const stock = stockDataArray[i];
@@ -230,13 +229,14 @@ function addGraphImg(stockDataArrayObject){
             mapping_ohlc = table.mapAs({'open':"open",'high': "high", 'low':"low", 'close':"close"});
             const series_ohlc = chart_ohlc.plot(0).candlestick(mapping_ohlc);
 
-            mapping_line = table.mapAs({'value':"open"});
-            const series_line = chart_line.plot(0).line(mapping_line);
+            mapping_line = table.mapAs({'value':"close"});
+            var series_line = chart_line.plot(0).line(mapping_line);
             
             series_ohlc.name(stock.stock);
             series_line.name(stock.stock);
         }
-
+        chart_ohlc.title("Candlestick Data of Selected Stocks");
+        chart_line.title("Closing Price of Selected Stocks");
         chart_ohlc.container('graph_ohlc');
         chart_ohlc.draw();
         chart_line.container('graph_line');

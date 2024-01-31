@@ -9,4 +9,4 @@ app_blueprint.register_blueprint(stock, url_prefix="/stock")
 
 @app_blueprint.route('/')
 def index():
-  return redirect(url_for("/.auth.index"))
+  return redirect(url_for("/.stock.dashboard"))
