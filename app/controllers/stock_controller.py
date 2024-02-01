@@ -33,6 +33,7 @@ def dashboard():
         symbol=company['symbol']
         stocks.append(symbol)
         stocks_map[symbol] = {
+            "company":company['company'],
             "code":symbol,
             "cagr":float(0.0)
         }

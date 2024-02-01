@@ -137,7 +137,7 @@ body {
 }
 
 .selected-stock-list button {
-    background-color: #AAA7AD;
+    background-color: #808080;
     cursor: pointer;
 }
 
@@ -145,7 +145,7 @@ body {
     border: solid 1px;
     display: flex;
     display: inline-block;
-    background-color: #AAA7AD;
+    background-color: #808080;
     margin-left: 1px;
     margin-bottom: 0.5px;
     box-shadow: 0 0 2px rgba(0, 0, 0, 0.1);

@@ -38,12 +38,12 @@ function updateShowingList(newShowingStocks, stocks_map){
     newShowingStocks.forEach(stock => {
         const tr = document.createElement('tr');
         tr.innerHTML = `
-            <td style="text-align: left;">${stocks_map[stock]['code']}</td>
+            <td style="text-align: left;">${stocks_map[stock]['company']}</td>
             <td>${stocks_map[stock]['cagr']}</td>
             <td>
             <label class="search-list">
                 <!-- {{ stock }}  -->
-                <button type="button" name="selected_stock" onclick="selectStock('${ stock }')">✓</button>
+                <button type="button" name="selected_stock" onclick="selectStock('${stock}')">✓</button>
             </label>
             </td>
         `;
