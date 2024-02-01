@@ -9,7 +9,7 @@
           <div class="col-left">
             <h2>Play With Stocks</h2>
 
-            <!-- Input date and CAGR filters -->
+            <!-- Input date and ngr filters -->
             <div class="filter-container">
               <!-- Date input fields and button -->
               <div class="date-filter-container">
@@ -24,14 +24,14 @@
                 </form>
               </div>
               
-              <!-- CAGR filter input fields and button -->
+              <!-- ngr filter input fields and button -->
               <div class="filter-section">
                 <form id="filterStocksForm" action="/stock/filter_stocks" method="get">
-                  <label for="from_cagr">From NGR: </label>
-                  <input type="number" name="from_cagr" id="from_cagr" step="0.01" required>
+                  <label for="from_ngr">From NGR: </label>
+                  <input type="number" name="from_ngr" id="from_ngr" step="0.01" required>
             
-                  <label for="to_cagr">To NGR: </label>
-                  <input type="number" name="to_cagr" id="to_cagr" step="0.01" required>
+                  <label for="to_ngr">To NGR: </label>
+                  <input type="number" name="to_ngr" id="to_ngr" step="0.01" required>
             
                   <button type="button" onclick="filterStocks()">Apply Filter</button>
                 </form>
@@ -80,7 +80,7 @@
                   {% for stock in showing_stocks %}
                       <tr>
                           <td style="text-align: left;">{{stocks_map[stock]['company']}}</td>
-                          <td>{{stocks_map[stock]['cagr']}}</td>
+                          <td>{{stocks_map[stock]['ngr']}}</td>
                           <td>
                           <label class="search-list">
                               <!-- {{ stock }}  -->

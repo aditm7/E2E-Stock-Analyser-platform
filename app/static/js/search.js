@@ -55,7 +55,7 @@ function updateShowingList(newShowingStocks, stocks_map){
         const tr = document.createElement('tr');
         tr.innerHTML = `
             <td style="text-align: left;">${stocks_map[stock]['company']}</td>
-            <td>${stocks_map[stock]['cagr']}</td>
+            <td>${stocks_map[stock]['ngr']}</td>
             <td>
             <label class="search-list">
                 <!-- {{ stock }}  -->
@@ -163,8 +163,8 @@ function reset() {
             updateSelectedList(newSelectedStocks)
 
             // Reset the filter input boxes in the UI.
-            document.getElementById('from_cagr').value = '';
-            document.getElementById('to_cagr').value = '';
+            document.getElementById('from_ngr').value = '';
+            document.getElementById('to_ngr').value = '';
         })
         .catch(error => {
             console.error('Error:', error);
@@ -184,8 +184,8 @@ function showall() {
             updateShowingList(newShowingStocks,stocks_map)
 
             // Reset the filter input boxes in the UI.
-            document.getElementById('from_cagr').value = '';
-            document.getElementById('to_cagr').value = '';
+            document.getElementById('from_ngr').value = '';
+            document.getElementById('to_ngr').value = '';
         })
         .catch(error => {
             console.error('Error:', error);
@@ -195,10 +195,10 @@ function showall() {
 
 // Displays the filtered stocks in the showing list based on filter inputs.
 function filterStocks() {
-    var from_cagr = document.getElementById('from_cagr').value;
-    var to_cagr = document.getElementById('to_cagr').value;
+    var from_ngr = document.getElementById('from_ngr').value;
+    var to_ngr = document.getElementById('to_ngr').value;
     // Make a GET request to the server to fetch the new list of showing stocks.
-    fetch(`/stock/filter_stocks?from_cagr=${from_cagr}&to_cagr=${to_cagr}`)
+    fetch(`/stock/filter_stocks?from_ngr=${from_ngr}&to_ngr=${to_ngr}`)
         .then(response => response.json())
         .then(data => {
             const newShowingStocks = data.new_showing_stocks;

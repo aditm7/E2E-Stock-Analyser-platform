@@ -20,8 +20,8 @@ def get_statistical_parameters(id,start_date,end_date):
     )
   ).order_by(StockData.date).all()
 
-  out = {"symbol":f"{id}","cagr":""}
+  out = {"symbol":f"{id}","ngr":""}
   if data:
     cagr = (data[-1].close-data[0].close)*100/(data[0].close)
-    out["cagr"] = round(cagr,2)
+    out["ngr"] = round(cagr,2)
   return out

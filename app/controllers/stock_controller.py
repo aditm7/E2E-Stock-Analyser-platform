@@ -36,12 +36,12 @@ def dashboard():
         stocks_map[symbol] = {
             "company":company['company'],
             "code":symbol,
-            "cagr":float(0.0)
+            "ngr":float(0.0)
         }
-    # Update the stocks map to include CAGR from the start and end dates.
+    # Update the stocks map to include ngr from the start and end dates.
     for stock in stocks:
         stock_obj = api_client.get("statistical_data", {"to_date":end_date,"from_date":start_date}, stock)
-        stocks_map[stock]["cagr"] = stock_obj["cagr"]
+        stocks_map[stock]["ngr"] = stock_obj["ngr"]
     
     showing_stocks = [stock for stock in stocks if stock not in selected_stocks]
     return render_template('home.html', all_stocks=stocks, showing_stocks=showing_stocks, selected_stocks=selected_stocks, graph_stocks=graph_stocks, stocks_map=stocks_map, from_date=start_date, to_date=end_date)
@@ -65,11 +65,11 @@ def process_date():
 def filter_stocks():
     global showing_stocks, selected_stocks, graph_stocks
 
-    from_cagr = float(request.args.get('from_cagr'))
-    to_cagr = float(request.args.get('to_cagr'))
+    from_ngr = float(request.args.get('from_ngr'))
+    to_ngr = float(request.args.get('to_ngr'))
 
     showing_stocks = [stock for stock, data in stocks_map.items() if
-                       data['cagr'] >= from_cagr and data['cagr'] <= to_cagr and stock not in selected_stocks]
+                       data['ngr'] >= from_ngr and data['ngr'] <= to_ngr and stock not in selected_stocks]
 
     return {'new_showing_stocks': showing_stocks, 'stocks_map': stocks_map}
 

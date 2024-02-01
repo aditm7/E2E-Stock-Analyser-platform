@@ -19,5 +19,5 @@ class StocksDto:
 
   stats_parameters = api.model('statistical_parameters',{
     'symbol':fields.String(description='Stock symbol code'),
-    'cagr':fields.Float(description='Cumulative annual growth rate of the stock in the period'),
+    'ngr':fields.Float(description='Net growth rate of the stock in the period'),
   })
