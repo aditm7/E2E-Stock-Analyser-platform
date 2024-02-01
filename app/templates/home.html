@@ -27,10 +27,10 @@
               <!-- CAGR filter input fields and button -->
               <div class="filter-section">
                 <form id="filterStocksForm" action="/stock/filter_stocks" method="get">
-                  <label for="from_cagr">From CAGR: </label>
+                  <label for="from_cagr">From NGR: </label>
                   <input type="number" name="from_cagr" id="from_cagr" step="0.01" required>
             
-                  <label for="to_cagr">To CAGR: </label>
+                  <label for="to_cagr">To NGR: </label>
                   <input type="number" name="to_cagr" id="to_cagr" step="0.01" required>
             
                   <button type="button" onclick="filterStocks()">Apply Filter</button>
@@ -72,7 +72,7 @@
               <thead>
                 <tr>
                     <th style="text-align: left;">Stock</th>
-                    <th>CAGR(%)</th>
+                    <th>NGR(%)</th>
                     <th>Add</th>
                 </tr>
               </thead>
