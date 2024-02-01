@@ -4,6 +4,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from database.models.user_model import User
 from app import db
 from config.api_client import ApiClient
+import datetime
 
 # stock controller blueprint to be registered with api blueprint.
 stock = Blueprint("stock", __name__)

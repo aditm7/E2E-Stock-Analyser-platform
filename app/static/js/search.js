@@ -1,3 +1,19 @@
+// Validate that the start date is less than the end date.
+function validateDates() {
+    var startDate = document.getElementById('from_date').value;
+    var endDate = document.getElementById('to_date').value;
+
+    var startDateObj = new Date(startDate);
+    var endDateObj = new Date(endDate);
+
+    if (startDateObj >= endDateObj) {
+        alert('Start date must be less than the end date.');
+        return false;
+    }
+
+    return true;
+}
+
 // Function to hide and show the display stocks depending on the text present in the search bar.
 function updateSearch(){
     $('.live-search-list tr').each(function(){ 

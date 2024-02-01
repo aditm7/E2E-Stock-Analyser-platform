@@ -13,7 +13,7 @@
             <div class="filter-container">
               <!-- Date input fields and button -->
               <div class="date-filter-container">
-                <form action="/stock/process_date" method="post">
+                <form action="/stock/process_date" method="post" onsubmit="return validateDates()">
                   <label for="from_date">From Date:</label>
                   <input type="date" id="from_date" name="from_date" value="{{ from_date }}" required>
             
