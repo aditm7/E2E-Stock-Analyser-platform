@@ -4,12 +4,14 @@
 
     <div class="container">
         <div class="row">
-
+          
+          <!-- Left column -->
           <div class="col-left">
             <h2>Play With Stocks</h2>
 
             <!-- Input date and CAGR filters -->
             <div class="filter-container">
+              <!-- Date input fields and button -->
               <div class="date-filter-container">
                 <form action="/stock/process_date" method="post">
                   <label for="from_date">From Date:</label>
@@ -21,7 +23,8 @@
                   <button type="submit">Update Stocks</button>
                 </form>
               </div>
-            
+              
+              <!-- CAGR filter input fields and button -->
               <div class="filter-section">
                 <form id="filterStocksForm" action="/stock/filter_stocks" method="get">
                   <label for="from_cagr">From CAGR: </label>
@@ -47,6 +50,7 @@
                   <button type="button" onclick="showall()" class="showall">Show All</button>
                 </div>
               </div>
+
               <!-- List of selected Stocks -->
               <div id="itemsContainer">
               <ul class="selected-stock-list" type="None"> 
@@ -62,23 +66,7 @@
               </div>
             </div>
 
-
-            <!-- List of selected Stocks -->
-            <!-- <div id="itemsContainer">
-            <ul class="selected-stock-list" type="None"> 
-              {% for stock in selected_stocks %}
-                  <li class="item">
-                      <label class="selected-list">
-                          {{ stock }} 
-                          <button type="button" name="removed_stock" onclick="removeStock('{{ stock }}')">x</button>
-                      </label>
-                  </li>
-              {% endfor %}
-            </ul>
-            </div> -->
-              
-
-            <!-- List of eligible stocks -->
+            <!-- Table of valid stocks to be displayed -->
             <div id="selectStockForm">
               <table>
               <thead>
@@ -108,7 +96,7 @@
 
           </div>
 
-          <!-- Right column- graph display -->
+          <!-- Right column of webpage - stocks graph display -->
           <div class="col-right">
             <div class="right-heading">
               <h2>Analyze Stocks</h2>
