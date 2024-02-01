@@ -55,10 +55,7 @@ database and the migration scripts to sync the changes.
 ## Config
 
 Necessary config files, to setup the server and intializing the Flask
-App. Also contains an
-[[`ApiClient`]{style="color: codetext"}]{style="background-color: codebackground"}
-object, which provides an abstraction layer to the server-api, through
-which client can communicate.
+App. Also contains an `ApiClient` object, which provides an abstraction layer to the server-api, through which client can communicate.
 
 ![Design](./screenshots/design.png)
 
