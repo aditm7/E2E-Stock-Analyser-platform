@@ -77,7 +77,7 @@ the **NGR%** of the stock over that period (net growth rate). We found
 this to be a useful metric for stock analysis.
 $$\text{NGR(\%)} = \left( \frac{\text{Final closing price} - \text{Initial closing price}}{\text{Initial closing price}} \right) \times 100$$
 
-![Stocks Filter]
+![Stocks Filter](./screenshots/filter.png)
 
 ### Interactive Chart Visualization of Multiple Stock data
 
@@ -128,7 +128,7 @@ the users.
 
 ## Swagger Docs for the Endpoints
 
-![Swagger Documentation]
+![Swagger Documentation](./screenshots/api_swagger.png)
 
 ## API workflow
 
